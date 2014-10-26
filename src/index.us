@@ -7,6 +7,6 @@
 	<script src="<%= js %>"></script>
 </head>
 <body>
-	Hello World!
+	Hello World.
 </body>
 </html>

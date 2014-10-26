@@ -43,6 +43,9 @@ module.exports = function (grunt) {
 		},
 
 		watch: {
+			options: {
+				livereload: true
+			},
 			js: {
 				files: ["<%= concat.js.src %>"],
 				tasks: "concat:js"
@@ -73,6 +76,17 @@ module.exports = function (grunt) {
 					css: "app.min.css"
 				}
 			}
+		},
+
+		express: {
+			all: {
+				options: {
+					port: 9000,
+					hostname: "localhost",
+					bases: ["dev"],
+					livereload: true
+				}
+			}
 		}
 	});
 
@@ -82,11 +96,12 @@ module.exports = function (grunt) {
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
 	grunt.loadNpmTasks("grunt-contrib-clean");
+	grunt.loadNpmTasks("grunt-express");
 
 	grunt.loadTasks("tasks");
 
 	// setup the workflow
-	grunt.registerTask("dev", ["clean", "concat", "homepage:dev", "watch"]);
+	grunt.registerTask("dev", ["clean", "concat", "homepage:dev", "express", "watch"]);
 	grunt.registerTask("dist", ["clean", "concat", "uglify", "cssmin", "homepage:dist"]);
 	grunt.registerTask("default", "dev");
 }
