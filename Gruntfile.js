@@ -16,6 +16,24 @@ module.exports = function (grunt) {
             }
         },
 
+        copy: {
+            main: {
+                files: [
+                    {
+                        nonull: true,
+                        src: ['vendor/angular.js'],
+                        dest: 'dev/angular.js',
+                    },
+
+                    {
+                        nonull: true,
+                        src: ['vendor/angular.min.js'],
+                        dest: 'dist/angular.min.js',
+                    },
+                ],
+            },
+        },
+
         concat: {
             js: {
                 src: ["src/js/**/*.js"],
@@ -66,14 +84,16 @@ module.exports = function (grunt) {
                 dest: "dev/index.html",
                 context: {
                     js: "app.js",
-                    css: "app.css"
+                    css: "app.css",
+                    angular: "angular.js",
                 }
             },
             dist: {
                 dest: "dist/index.html",
                 context: {
                     js: "app.min.js",
-                    css: "app.min.css"
+                    css: "app.min.css",
+                    angular: "angular.min.js",
                 }
             }
         },
@@ -91,6 +111,7 @@ module.exports = function (grunt) {
     });
 
     // load tasks from npm
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks("grunt-contrib-concat");
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-contrib-uglify");
@@ -101,7 +122,7 @@ module.exports = function (grunt) {
     grunt.loadTasks("tasks");
 
     // setup the workflow
-    grunt.registerTask("dev", ["clean", "concat", "homepage:dev", "express", "watch"]);
-    grunt.registerTask("dist", ["clean", "concat", "uglify", "cssmin", "homepage:dist"]);
+    grunt.registerTask("dev", ["clean", "concat", "copy", "homepage:dev", "express", "watch"]);
+    grunt.registerTask("dist", ["clean", "concat", "copy", "uglify", "cssmin", "homepage:dist"]);
     grunt.registerTask("default", "dev");
 }

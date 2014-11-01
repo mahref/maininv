@@ -16,6 +16,7 @@
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-express": "^1.4.1",
-    "grunt-reload-chrome": "^0.1.4"
+    "grunt-reload-chrome": "^0.1.4",
+    "grunt-contrib-copy": "^0.7.0"
   }
 }

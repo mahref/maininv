@@ -5,6 +5,7 @@
     <title>Maintenance Inventory Management</title>
     <link rel="stylesheet" href="<%= css %>">
     <script src="<%= js %>"></script>
+    <script src="<%= angular %>"></script>
 </head>
 <body>
     Hello World.
