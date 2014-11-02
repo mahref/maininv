@@ -12,23 +12,37 @@ module.exports = function (grunt) {
                 src: ['dev']
             },
             dist: {
-            src: ['dist']
+                src: ['dist']
             }
         },
 
         copy: {
-            main: {
+            dev: {
                 files: [
                     {
-                        nonull: true,
-                        src: ['vendor/angular.js'],
-                        dest: 'dev/angular.js',
+                        expand: true,
+                        flatten: true,
+                        src: [
+                            "vendor/angular.js",
+                            "vendor/angular-route.js",
+                            "src/template/*.html",
+                        ],
+                        dest: "dev/",
                     },
+                ],
+            },
 
+           dist: {
+                files: [
                     {
-                        nonull: true,
-                        src: ['vendor/angular.min.js'],
-                        dest: 'dist/angular.min.js',
+                        expand: true,
+                        flatten: true,
+                        src: [
+                            "vendor/angular.js",
+                            "vendor/angular-route.js",
+                            "src/template/*.html",
+                        ],
+                        dest: "dist/",
                     },
                 ],
             },
@@ -73,8 +87,14 @@ module.exports = function (grunt) {
                 tasks: "concat:css"
             },
             homepage: {
-                files: ["<%= homepage.template %>"],
-                tasks: ["homepage:dev"]
+                files: [
+                    "<%= homepage.template %>",
+                    "src/template/*"
+                    ],
+                tasks: [
+                    "homepage:dev",
+                    "copy:dev"
+                    ],
             }
         },
 
@@ -122,7 +142,23 @@ module.exports = function (grunt) {
     grunt.loadTasks("tasks");
 
     // setup the workflow
-    grunt.registerTask("dev", ["clean", "concat", "copy", "homepage:dev", "express", "watch"]);
-    grunt.registerTask("dist", ["clean", "concat", "copy", "uglify", "cssmin", "homepage:dist"]);
+    grunt.registerTask("dev", [
+        "clean",
+        "concat",
+        "copy:dev",
+        "homepage:dev",
+        "express",
+        "watch",
+        ]);
+
+    grunt.registerTask("dist", [
+        "config:dist",
+        "clean",
+        "concat",
+        "copy:dist",
+        "uglify",
+        "cssmin",
+        "homepage:dist",
+        ]);
     grunt.registerTask("default", "dev");
 }

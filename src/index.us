@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <title>Maintenance Inventory Management</title>
     <link rel="stylesheet" href="<%= css %>">
+    <script src="angular<%= min %>.js"></script>
+    <script src="angular-route<%= min %>.js"></script>
     <script src="<%= js %>"></script>
-    <script src="<%= angular %>"></script>
 </head>
 <body>
-    Hello World.
+    Index page.
+    <div id="view" ng-view></div>
 </body>
 </html>
